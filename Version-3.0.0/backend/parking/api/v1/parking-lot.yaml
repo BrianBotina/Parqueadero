@@ -1,0 +1,133 @@
+openapi: 3.0.3
+info:
+  title: Parking Lot
+  description: API to manage the parking lots of a residential
+  version: 1.0.0
+
+paths:
+  /v1/Residential/{residentialName}/Configuration:
+    get:
+      tags:
+        - residential
+      operationId: getConfiguration
+      parameters:
+        - in: path
+          name: residentialName
+          required: true
+          schema:
+            type: string
+            description: residential name
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResidentialConfiguration'
+
+components:
+  schemas:
+    ResidentialConfiguration:
+      type: object
+      nullable: false
+      required:
+        - residential
+        - max_weight
+        - max_axis
+        - arching_day
+        - alerts_day
+        - car_parking_num
+        - motorcycle_parking_num
+        - bicycle_parking_num
+        - visit_car_parking_num
+        - visit_motorcycle_parking_num
+        - visit_bicycle_parking_num
+        - visit_payment_type
+        - grace_time
+        - car_payment_value
+        - motorcycle_payment_value
+        - bicycle_payment_value
+        - receipt_header
+        - receipt_footer
+        - responsibility_text
+      properties:
+        residential:
+          type: string
+        max_weight:
+          type: number
+          format: float
+          description: Peso máximo permitido para vehículos
+        max_axis:
+          type: integer
+          format: int32
+          description: Ejes máximos permitidos para vehículos
+        arching_day:
+          $ref: '#/components/schemas/WeekDays'
+        alerts_day:
+          $ref: '#/components/schemas/WeekDays'
+        car_parking_num:
+          type: integer
+          format: int32
+          description: Cantidad de parqueaderos para carros
+        motorcycle_parking_num:
+          type: integer
+          format: int32
+          description: Cantidad de parqueaderos para motocicletas
+        bicycle_parking_num:
+          type: integer
+          format: int32
+          description: Cantidad de parqueaderos para bicicletas
+        visit_car_parking_num:
+          type: integer
+          format: int32
+          description: Cantidad de parqueaderos de carros para visitantes
+        visit_motorcycle_parking_num:
+          type: integer
+          format: int32
+          description: Cantidad de parqueaderos de motocicletas para visitantes
+        visit_bicycle_parking_num:
+          type: integer
+          format: int32
+          description: Cantidad de parqueaderos de bicicletas para visitantes
+        visit_payment_type:
+          type: string
+          enum:
+            - Hora
+            - Minuto
+            - Día
+          description: Tipo de pago para visitantes
+        grace_time:
+          type: number
+          format: float
+          description: Tiempo de gracia para el periodo especificado
+        car_payment_value:
+          type: number
+          format: float
+          description: Valor del pago para carros
+        motorcycle_payment_value:
+          type: number
+          format: float
+          description: Valor del pago para motocicletas
+        bicycle_payment_value:
+          type: number
+          format: float
+          description: Valor del pago para bicicletas
+        receipt_header:
+          type: string
+          description: Encabezado del recibo de pago
+        receipt_footer:
+          type: string
+          description: Pie de página del recibo de pago
+        responsibility_text:
+          type: string
+          description: Texto de responsabilidad
+    WeekDays:
+      type: string
+      enum:
+        - Lunes
+        - Martes
+        - Miércoles
+        - Jueves
+        - Viernes
+        - Sábado
+        - Domingo
